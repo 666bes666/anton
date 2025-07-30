@@ -39,7 +39,7 @@ jobs:
       run: |
         pytest
 
-deploy:
+  deploy:
   needs: build-and-test
   runs-on: ubuntu-latest
   # Only deploy when pushing to the main branch
