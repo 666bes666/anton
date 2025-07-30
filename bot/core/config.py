@@ -22,9 +22,11 @@ try:
 except Exception as e:
     # Fallback for when .env is missing
     import os
-    class FallbackSettings:
-        discord_bot_token = os.getenv("DISCORD_BOT_TOKEN", "")
-        config_file_path = os.getenv("CONFIG_FILE_PATH", "data/server_configs.json")
+    from typing import Any
     
-    settings = FallbackSettings()
+    class FallbackSettings:
+        discord_bot_token: str = os.getenv("DISCORD_BOT_TOKEN", "")
+        config_file_path: str = os.getenv("CONFIG_FILE_PATH", "data/server_configs.json")
+    
+    settings: Any = FallbackSettings()
 
