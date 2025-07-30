@@ -1,0 +1,56 @@
+site_name: Discord Daily Message Bot
+site_description: A professional Discord bot for sending scheduled daily messages
+site_author: anton
+
+repo_name: 666bes666/anton
+repo_url: https://github.com/666bes666/anton
+
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: blue
+      accent: blue
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: blue
+      accent: blue
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.highlight
+    - search.share
+
+nav:
+  - Home: index.md
+  - User Guide:
+    - Installation: user-guide/installation.md
+    - Configuration: user-guide/configuration.md
+    - Commands: user-guide/commands.md
+  - Developer Guide:
+    - Architecture: dev-guide/architecture.md
+    - Contributing: dev-guide/contributing.md
+    - API Reference: dev-guide/api.md
+  - DevOps:
+    - CI/CD: devops/cicd.md
+    - Deployment: devops/deployment.md
+    - Monitoring: devops/monitoring.md
+
+plugins:
+  - search
+  - mkdocstrings
+
+markdown_extensions:
+  - admonition
+  - codehilite
+  - pymdownx.superfences
+  - pymdownx.tabbed
+  - toc:
+      permalink: true
