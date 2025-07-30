@@ -1,11 +1,11 @@
-
-from pydantic import BaseModel, Field
+"""Configuration management using Pydantic."""
+from pydantic import BaseSettings, Field
 from dotenv import load_dotenv
 import os
 
 load_dotenv()
 
-class AppSettings(BaseModel):
+class AppSettings(BaseSettings):
     """
     Pydantic model for application settings, loaded from environment variables.
     """
@@ -16,5 +16,15 @@ class AppSettings(BaseModel):
         env_file = ".env"
         env_file_encoding = "utf-8"
 
-settings = AppSettings()
+# Create settings instance
+try:
+    settings = AppSettings()
+except Exception as e:
+    # Fallback for when .env is missing
+    import os
+    class FallbackSettings:
+        discord_bot_token = os.getenv("DISCORD_BOT_TOKEN", "")
+        config_file_path = os.getenv("CONFIG_FILE_PATH", "data/server_configs.json")
+    
+    settings = FallbackSettings()
 
