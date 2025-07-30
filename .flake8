@@ -1,0 +1,18 @@
+[flake8]
+max-line-length = 127
+max-complexity = 10
+exclude = 
+    .git,
+    __pycache__,
+    .venv,
+    venv,
+    .env,
+    .github
+
+# Ignore certain errors
+ignore = 
+    E203,  # whitespace before ':'
+    W503,  # line break before binary operator
+    
+per-file-ignores =
+    test_*.py:F401,F811  # Allow unused imports and redefinitions in tests

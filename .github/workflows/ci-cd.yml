@@ -1,0 +1,61 @@
+name: Python Discord Bot CI/CD
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.9", "3.10", "3.11"]
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install flake8 pytest
+
+    - name: Lint with flake8
+      run: |
+        # stop the build if there are Python syntax errors or undefined names
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+
+    - name: Test with pytest
+      run: |
+        pytest
+
+deploy:
+  needs: build-and-test
+  runs-on: ubuntu-latest
+  # Only deploy when pushing to the main branch
+  if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+
+  steps:
+    - name: Deploy to Production
+      env:
+        DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
+      run: |
+        echo "Deploying to production..."
+        # Add your deployment script here
+        # For example, using SSH and rsync:
+        # echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key.pem
+        # chmod 600 private_key.pem
+        # rsync -avz -e "ssh -i private_key.pem -o StrictHostKeyChecking=no" . user@host:/path/to/your/app
+        # ssh -i private_key.pem user@host 'cd /path/to/your/app && pm2 restart your_bot_name'
+        echo "Deployment placeholder. Configure your deployment steps here."
+
