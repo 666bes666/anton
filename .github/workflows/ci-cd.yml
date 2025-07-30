@@ -40,12 +40,12 @@ jobs:
         pytest
 
   deploy:
-  needs: build-and-test
-  runs-on: ubuntu-latest
-  # Only deploy when pushing to the main branch
-  if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    # Only deploy when pushing to the main branch
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
 
-  steps:
+    steps:
     - name: Deploy to Production
       env:
         DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
